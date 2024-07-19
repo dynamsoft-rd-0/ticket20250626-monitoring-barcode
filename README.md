@@ -32,7 +32,7 @@ export default {
 
 > Run the app
 ```bash
-npm Install
+npm install
 npm run dev
 ```
 
