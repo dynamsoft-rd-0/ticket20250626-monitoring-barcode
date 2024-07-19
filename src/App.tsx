@@ -1,22 +1,48 @@
-import {
-  BarcodeReader,
-} from 'dynamsoft-javascript-barcode';
+import { useRef, useState, useEffect } from 'react';
+import AppBarcodeScanner from './assets/AppBarcodeScanner';
 
-export async function setupScanner() {
-  BarcodeReader.license =
-    'f0068NQAAACVyx6MyCssKs3skHkCCzofQZMqtUVUnUAHStLWGSlgrz1fRlXoCNcVUSXSOL8GiwWHsHsaA5vkihwvSTsqYi8E=';
-  BarcodeReader.engineResourcePath =
-    'https://cdn.jsdelivr.net/npm/dynamsoft-javascript-barcode/dist/';
-}
-
-setupScanner()
 
 function App() {
 
+  const elRef = useRef<HTMLInputElement>(null);
+  const [initialized, setInitialized] = useState(false);
+
+  useEffect(() => {
+    setInitialized(false);
+    AppBarcodeScanner.init(elRef)
+      .then(() => {
+        AppBarcodeScanner.onScanDone(() => {
+          console.log('Scan done');
+        });
+        setInitialized(true);
+      })
+      .catch((ex) => {
+        setInitialized(false);
+        console.error(ex);
+      });
+
+    return () => {
+      if (
+        AppBarcodeScanner.scanner &&
+        !AppBarcodeScanner.scanner.isContextDestroyed()
+      ) {
+        AppBarcodeScanner.scanner.destroyContext();
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
-    <>
-    </>
-  )
+    <div ref={elRef} >
+      <div
+        className="dce-video-container"
+      >
+        {(!initialized) && (
+          <div>Loading</div>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default App
