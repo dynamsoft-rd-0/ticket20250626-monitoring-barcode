@@ -29,3 +29,16 @@ export default {
 - Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
 - Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
 # monitoring-barcode
+
+> Run the app
+```bash
+npm Install
+npm run dev
+```
+
+When we comment out `<script src="vendor/elts/monitoring.script.js"></script>` in `index.html` like so:
+```html
+<!-- line 8: <script src="vendor/elts/monitoring.script.js"></script> -->
+```
+scanner works fine, but when we uncomment it, scanner stops working.
+
