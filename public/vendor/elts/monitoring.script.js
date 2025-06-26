@@ -1,3 +1,5 @@
+var originalPromise = window.Promise;
+
 window.NREUM || (NREUM = {});
 NREUM.init = {
   distributed_tracing: { enabled: true },
@@ -3748,3 +3750,6 @@ NREUM.info = {
       });
     })();
 })();
+
+
+window.Promise = originalPromise;
